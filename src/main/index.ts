@@ -6,7 +6,7 @@ import { Socket } from './Socket'
 import * as fs from 'fs';
 
 // comment below line to allow running on non linux devices
-import {Canbus} from "./Canbus"
+// import {Canbus} from "./Canbus"
 
 import { ExtraConfig, KeyBindings } from "./Globals";
 // import CarplayNode, {DEFAULT_CONFIG, CarplayMessage} from "node-carplay/node";
@@ -43,7 +43,7 @@ const EXTRA_CONFIG: ExtraConfig = {
 }
 
 // comment below line to allow running on non linux devices
-let canbus: null | Canbus
+// let canbus: null | Canbus
 
 let socket: null | Socket
 
@@ -66,6 +66,7 @@ fs.exists(configPath, (exists) => {
     }
     socket = new Socket(config!, saveSettings)
     // comment below if statement to allow running on non linux devices
+    /*
     if(config!.canbus) {
       console.log("Configuring can", config!.canConfig)
       canbus = new Canbus('can0',  socket, config!.canConfig)
@@ -76,6 +77,7 @@ fs.exists(configPath, (exists) => {
         mainWindow?.webContents?.send('reverse', data)
       })
     }
+    */
 
 })
 

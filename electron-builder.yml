@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.binoy.react-carplay
 productName: react-carplay
 directories:
   buildResources: build
@@ -33,7 +33,7 @@ linux:
     - AppImage
     - snap
     - deb
-  maintainer: electronjs.org
+  maintainer: Binoy Anil <binoyanil85@gmail.com>
   category: Utility
 appImage:
   artifactName: ${name}-${version}-${arch}.${ext}

@@ -1,0 +1,61 @@
+/// <reference types="node" />
+/// <reference types="node" />
+import { SocketMostClient } from '../client/SocketMost-Client';
+import { SocketMostUsb } from '../client/SocketMost-usb';
+import { ModuleSingle, MostRxMessage } from './Messages';
+import EventEmitter from 'events';
+export type SourceRecord = {
+    fBlockID: number;
+    instanceID: number;
+    shadow: number;
+    addressHigh: number;
+    addressLow: number;
+    name: string;
+};
+export declare class JlrAudioControl extends EventEmitter {
+    driver: SocketMostUsb | SocketMostClient;
+    position: number;
+    connectInterval?: NodeJS.Timer;
+    readyTimer?: NodeJS.Timeout;
+    sources: Record<string, SourceRecord>;
+    currentSource: null | SourceRecord;
+    nextSource: null | SourceRecord;
+    ready: boolean;
+    blocksSent: boolean;
+    firstFblocks: boolean;
+    lastHeartBeat: number;
+    heartBeat?: NodeJS.Timeout;
+    allocRequest?: MostRxMessage;
+    deallocRequest?: MostRxMessage;
+    subscriptionList: ModuleSingle[];
+    toSubscribe: ModuleSingle[];
+    lastSubscription?: number;
+    subscriptionTimeout?: NodeJS.Timeout;
+    subscriptions: ModuleSingle[];
+    defaultSource: SourceRecord;
+    configPath: string;
+    retryInterval?: NodeJS.Timeout;
+    constructor(driver: SocketMostUsb | SocketMostClient);
+    parseMessage(message: MostRxMessage): void;
+    sendFkt0xC81(message: MostRxMessage): void;
+    sendD22(message: MostRxMessage): void;
+    sendFBlocks(message: MostRxMessage): void;
+    sendNotifs(message: MostRxMessage): void;
+    send405(): void;
+    send407(): void;
+    send408(): void;
+    send406(): void;
+    send101(): void;
+    stopSource(): void;
+    writeLastSource(data: SourceRecord): void;
+    switchSource(data?: SourceRecord | null): void;
+    sendDa0(message: MostRxMessage): void;
+    sendDa1(message: MostRxMessage): void;
+    sendC80(message: MostRxMessage): void;
+    sendHeartBeat(): void;
+    startSource(): void;
+    stopCurrentSource(): void;
+    subscribe(module: ModuleSingle): void;
+    subscribeNext(): void;
+    subscribeToAll(): void;
+}
